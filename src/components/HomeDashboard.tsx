@@ -9,6 +9,7 @@ import TempChart from './TempChart';
 import PostFeed from './PostFeed';
 import Sidebar from './Sidebar';
 import Header from './Header';
+import WeatherAlertBanner from './WeatherAlertBanner';
 import { getWeatherCondition } from '../utils/weatherIcons';
 
 interface HomeDashboardProps {
@@ -115,6 +116,9 @@ export default function HomeDashboard({ initialPosts, initialCities }: HomeDashb
         {/* Left Side Column: Weather Dashboard + Feed */}
         <div className="flex-1 space-y-6">
           
+          {/* Automated Weather Warning Banner */}
+          <WeatherAlertBanner post={latestForecast} cityName={selectedCity} />
+
           {/* Main Hero Weather Card */}
           <section aria-label="Boletim climático em destaque">
             <HeroForecast post={latestForecast} cityName={selectedCity} />

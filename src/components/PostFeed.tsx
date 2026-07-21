@@ -9,7 +9,9 @@ import {
   IconChevronRight, 
   IconNews, 
   IconSun, 
-  IconHistory 
+  IconHistory,
+  IconSearch,
+  IconX
 } from '@tabler/icons-react';
 
 interface PostFeedProps {
@@ -18,12 +20,23 @@ interface PostFeedProps {
 
 export default function PostFeed({ posts }: PostFeedProps) {
   const [activeTab, setActiveTab] = useState<'previsao' | 'diario' | 'artigos'>('previsao');
+  const [searchQuery, setSearchQuery] = useState<string>('');
   const [visibleCount, setVisibleCount] = useState<number>(10);
 
-  // Filter posts based on active category tab
+  // Filter posts based on active category tab and search query
   const filteredPosts = useMemo(() => {
-    return posts.filter(post => post.tipo === activeTab);
-  }, [posts, activeTab]);
+    let result = posts.filter(post => post.tipo === activeTab);
+    
+    if (searchQuery.trim()) {
+      const q = searchQuery.toLowerCase().trim();
+      result = result.filter(post => 
+        post.titulo.toLowerCase().includes(q) || 
+        post.resumo.toLowerCase().includes(q)
+      );
+    }
+    
+    return result;
+  }, [posts, activeTab, searchQuery]);
 
   // Slice visible posts for pagination
   const visiblePosts = useMemo(() => {
@@ -55,29 +68,55 @@ export default function PostFeed({ posts }: PostFeedProps) {
   return (
     <div className="space-y-6">
       
-      {/* Category Tab Switcher */}
-      <div className="flex gap-1.5 p-1 bg-white/20 backdrop-blur-md rounded-full border border-white/30 max-w-md shadow-xs">
-        {tabsConfig.map(tab => {
-          const isActive = activeTab === tab.id;
-          const Icon = tab.icon;
-          return (
+      {/* Category Tab Switcher and Search Input */}
+      <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
+        <div className="flex gap-1.5 p-1 bg-white/20 backdrop-blur-md rounded-full border border-white/30 shadow-xs">
+          {tabsConfig.map(tab => {
+            const isActive = activeTab === tab.id;
+            const Icon = tab.icon;
+            return (
+              <button
+                key={tab.id}
+                onClick={() => handleTabChange(tab.id)}
+                className={`flex-1 flex items-center justify-center gap-1.5 px-3 py-1.5 text-xs font-bold rounded-full transition-all duration-300 cursor-pointer ${
+                  isActive
+                    ? 'bg-slate-900 text-white shadow-md shadow-slate-900/10'
+                    : 'text-slate-650 hover:text-slate-900 hover:bg-white/40'
+                }`}
+              >
+                <Icon className="w-3.5 h-3.5" />
+                <span>{tab.label}</span>
+                <span className={`ml-1 text-[9px] px-1.5 py-0.5 rounded-full font-bold ${isActive ? 'bg-white/25 text-white' : 'bg-slate-900/10 text-slate-500'}`}>
+                  {posts.filter(p => p.tipo === tab.id).length}
+                </span>
+              </button>
+            );
+          })}
+        </div>
+
+        {/* Live Search Input */}
+        <div className="relative flex-1 max-w-xs">
+          <input
+            type="text"
+            value={searchQuery}
+            onChange={(e) => {
+              setSearchQuery(e.target.value);
+              setVisibleCount(10);
+            }}
+            placeholder="Buscar por assunto, frio, chuva..."
+            className="w-full pl-8 pr-8 py-1.5 text-xs font-semibold text-slate-800 bg-white/30 border border-white/40 rounded-full focus:outline-none focus:bg-white/70 focus:border-sky-400 transition-all placeholder:text-slate-400 shadow-xs"
+          />
+          <IconSearch className="w-3.5 h-3.5 text-slate-400 absolute left-2.5 top-1/2 -translate-y-1/2 pointer-events-none" />
+          {searchQuery && (
             <button
-              key={tab.id}
-              onClick={() => handleTabChange(tab.id)}
-              className={`flex-1 flex items-center justify-center gap-1.5 px-3 py-1.5 text-xs font-bold rounded-full transition-all duration-300 cursor-pointer ${
-                isActive
-                  ? 'bg-slate-900 text-white shadow-md shadow-slate-900/10'
-                  : 'text-slate-650 hover:text-slate-900 hover:bg-white/40'
-              }`}
+              onClick={() => setSearchQuery('')}
+              className="absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 p-0.5 cursor-pointer"
+              title="Limpar busca"
             >
-              <Icon className="w-3.5 h-3.5" />
-              <span>{tab.label}</span>
-              <span className={`ml-1 text-[9px] px-1.5 py-0.5 rounded-full font-bold ${isActive ? 'bg-white/25 text-white' : 'bg-slate-900/10 text-slate-500'}`}>
-                {posts.filter(p => p.tipo === tab.id).length}
-              </span>
+              <IconX className="w-3.5 h-3.5" />
             </button>
-          );
-        })}
+          )}
+        </div>
       </div>
 
       {/* Grid List */}

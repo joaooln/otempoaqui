@@ -2,7 +2,7 @@ import React from 'react';
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import { getPostBySlug, getCities } from '../../../utils/db';
+import { getPostBySlug, getCities, posts } from '../../../utils/db';
 import Header from '../../../components/Header';
 import Sidebar from '../../../components/Sidebar';
 import ShareButton from '../../../components/ShareButton';
@@ -15,7 +15,9 @@ import {
   IconTemperature,
   IconCloudRain,
   IconWind,
-  IconDroplet
+  IconDroplet,
+  IconClock,
+  IconChevronRight
 } from '@tabler/icons-react';
 
 interface PageProps {
@@ -60,6 +62,15 @@ export default async function PostPage({ params }: PageProps) {
 
   const showStats = (post.tipo === 'previsao' || post.tipo === 'diario') && post.dadosMeteorologicos;
   const { tempMinima, tempMaxima, chuvaMm, ventoKmh, umidadePct } = post.dadosMeteorologicos || {};
+
+  // Calculate reading time (approx 200 words per minute)
+  const wordCount = (post.conteudo || '').replace(/<[^>]*>/g, ' ').split(/\s+/).filter(Boolean).length;
+  const readingTimeMinutes = Math.max(1, Math.ceil(wordCount / 200));
+
+  // Get related posts for the same city
+  const relatedPosts = posts
+    .filter(p => p.cidade.toLowerCase() === post.cidade.toLowerCase() && p.slug !== post.slug)
+    .slice(0, 3);
 
   const formatDate = (dateStr: string) => {
     try {
@@ -112,6 +123,10 @@ export default async function PostPage({ params }: PageProps) {
               <div className="flex items-center gap-1">
                 <IconUser className="w-3.5 h-3.5" />
                 <span>{post.autor}</span>
+              </div>
+              <div className="flex items-center gap-1 text-slate-500">
+                <IconClock className="w-3.5 h-3.5" />
+                <span>{readingTimeMinutes} min de leitura</span>
               </div>
             </div>
 
@@ -203,6 +218,37 @@ export default async function PostPage({ params }: PageProps) {
               Ver outras previsões
             </Link>
           </div>
+
+          {/* Related Articles Section */}
+          {relatedPosts.length > 0 && (
+            <div className="pt-6 border-t border-slate-100 space-y-4">
+              <h3 className="text-sm font-bold text-slate-800 uppercase tracking-wider font-display">
+                Outros boletins em {post.cidade}
+              </h3>
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                {relatedPosts.map(rel => (
+                  <Link
+                    key={rel.id}
+                    href={`/post/${rel.slug}`}
+                    className="p-3 rounded-xl bg-white/40 border border-white/40 hover:bg-white/70 transition-all group flex flex-col justify-between"
+                  >
+                    <div className="space-y-1">
+                      <span className="text-[9px] font-extrabold text-slate-400 uppercase tracking-wider block">
+                        {formatDate(rel.data)}
+                      </span>
+                      <h4 className="text-xs font-bold text-slate-900 line-clamp-2 leading-snug group-hover:text-sky-600 transition-colors font-display">
+                        {rel.titulo}
+                      </h4>
+                    </div>
+                    <div className="mt-3 text-[10px] font-bold text-sky-600 flex items-center gap-0.5">
+                      <span>Ler mais</span>
+                      <IconChevronRight className="w-3 h-3" />
+                    </div>
+                  </Link>
+                ))}
+              </div>
+            </div>
+          )}
 
         </div>
 

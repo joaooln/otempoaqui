@@ -54,7 +54,34 @@ export default async function CityPage({ params }: PageProps) {
   const latestForecastRaw = getLatestForecast(city.nome);
   const latestForecast = latestForecastRaw ? (() => {
     const { conteudo, ...rest } = latestForecastRaw;
-    return rest;
+    const mergedPost = { ...rest };
+    if (mergedPost.dadosMeteorologicos) {
+      const copyMeteorologicos = { ...mergedPost.dadosMeteorologicos };
+      
+      if (copyMeteorologicos.tempMinima === null) {
+        const found = cityPostsRaw.find(p => p.dadosMeteorologicos?.tempMinima !== null);
+        if (found) copyMeteorologicos.tempMinima = found.dadosMeteorologicos.tempMinima;
+      }
+      if (copyMeteorologicos.tempMaxima === null) {
+        const found = cityPostsRaw.find(p => p.dadosMeteorologicos?.tempMaxima !== null);
+        if (found) copyMeteorologicos.tempMaxima = found.dadosMeteorologicos.tempMaxima;
+      }
+      if (copyMeteorologicos.chuvaMm === null) {
+        const found = cityPostsRaw.find(p => p.dadosMeteorologicos?.chuvaMm !== null);
+        if (found) copyMeteorologicos.chuvaMm = found.dadosMeteorologicos.chuvaMm;
+      }
+      if (copyMeteorologicos.ventoKmh === null) {
+        const found = cityPostsRaw.find(p => p.dadosMeteorologicos?.ventoKmh !== null);
+        if (found) copyMeteorologicos.ventoKmh = found.dadosMeteorologicos.ventoKmh;
+      }
+      if (copyMeteorologicos.umidadePct === null) {
+        const found = cityPostsRaw.find(p => p.dadosMeteorologicos?.umidadePct !== null);
+        if (found) copyMeteorologicos.umidadePct = found.dadosMeteorologicos.umidadePct;
+      }
+      
+      mergedPost.dadosMeteorologicos = copyMeteorologicos;
+    }
+    return mergedPost;
   })() : undefined;
 
   const chartData = getTemperatureChartData(city.nome);

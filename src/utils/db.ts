@@ -48,12 +48,20 @@ export function getLatestForecast(cityName: string): Post | undefined {
 
 // Get the 7 most recent posts with temperature data for the chart, sorted chronologically
 export function getTemperatureChartData(cityName: string) {
-  const cityPosts = getPostsByCity(cityName)
-    .filter(p => p.tipo === 'previsao' || p.tipo === 'diario')
-    .slice(0, 7); // os 7 posts mais recentes, tenham dado ou não
+  const cityPosts = getPostsByCity(cityName);
+  
+  // Filter posts that have both tempMinima and tempMaxima first
+  const tempPosts = cityPosts.filter(
+    p => (p.tipo === 'previsao' || p.tipo === 'diario') &&
+    p.dadosMeteorologicos && 
+    p.dadosMeteorologicos.tempMinima !== null && 
+    p.dadosMeteorologicos.tempMaxima !== null
+  );
 
-  return cityPosts
-    .filter(p => p.dadosMeteorologicos && p.dadosMeteorologicos.tempMinima !== null && p.dadosMeteorologicos.tempMaxima !== null)
+  // Take the 7 most recent
+  const sliced = tempPosts.slice(0, 7);
+
+  return sliced
     .map(p => ({
       date: formatDateLabel(p.data),
       min: p.dadosMeteorologicos!.tempMinima,

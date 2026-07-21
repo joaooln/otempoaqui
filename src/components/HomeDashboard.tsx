@@ -26,18 +26,50 @@ export default function HomeDashboard({ initialPosts, initialCities }: HomeDashb
 
   // Find the latest weather forecast for this city
   const latestForecast = useMemo(() => {
-    const forecast = cityPosts.find(p => p.tipo === 'previsao');
-    return forecast || cityPosts[0]; // fallback to latest post if no structured forecast
+    const forecast = cityPosts.find(p => p.tipo === 'previsao') || cityPosts[0];
+    if (!forecast) return undefined;
+    
+    const mergedPost = { ...forecast };
+    if (mergedPost.dadosMeteorologicos) {
+      const copyMeteorologicos = { ...mergedPost.dadosMeteorologicos };
+      
+      if (copyMeteorologicos.tempMinima === null) {
+        const found = cityPosts.find(p => p.dadosMeteorologicos?.tempMinima !== null);
+        if (found) copyMeteorologicos.tempMinima = found.dadosMeteorologicos.tempMinima;
+      }
+      if (copyMeteorologicos.tempMaxima === null) {
+        const found = cityPosts.find(p => p.dadosMeteorologicos?.tempMaxima !== null);
+        if (found) copyMeteorologicos.tempMaxima = found.dadosMeteorologicos.tempMaxima;
+      }
+      if (copyMeteorologicos.chuvaMm === null) {
+        const found = cityPosts.find(p => p.dadosMeteorologicos?.chuvaMm !== null);
+        if (found) copyMeteorologicos.chuvaMm = found.dadosMeteorologicos.chuvaMm;
+      }
+      if (copyMeteorologicos.ventoKmh === null) {
+        const found = cityPosts.find(p => p.dadosMeteorologicos?.ventoKmh !== null);
+        if (found) copyMeteorologicos.ventoKmh = found.dadosMeteorologicos.ventoKmh;
+      }
+      if (copyMeteorologicos.umidadePct === null) {
+        const found = cityPosts.find(p => p.dadosMeteorologicos?.umidadePct !== null);
+        if (found) copyMeteorologicos.umidadePct = found.dadosMeteorologicos.umidadePct;
+      }
+      
+      mergedPost.dadosMeteorologicos = copyMeteorologicos;
+    }
+    return mergedPost;
   }, [cityPosts]);
 
   // Extract the 7 most recent records with temperature data for the chart, sorted chronologically
   const chartData = useMemo(() => {
-    const recentPosts = cityPosts
-      .filter(p => p.tipo === 'previsao' || p.tipo === 'diario')
-      .slice(0, 7);
+    const tempPosts = cityPosts.filter(
+      p => (p.tipo === 'previsao' || p.tipo === 'diario') &&
+      p.dadosMeteorologicos && 
+      p.dadosMeteorologicos.tempMinima !== null && 
+      p.dadosMeteorologicos.tempMaxima !== null
+    );
     
-    return recentPosts
-      .filter(p => p.dadosMeteorologicos && p.dadosMeteorologicos.tempMinima !== null && p.dadosMeteorologicos.tempMaxima !== null)
+    return tempPosts
+      .slice(0, 7)
       .map(p => {
         const [_, month, day] = p.data.split('-');
         return {

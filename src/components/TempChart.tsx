@@ -21,9 +21,19 @@ interface ChartDataPoint {
 
 interface TempChartProps {
   data: ChartDataPoint[];
+  rangeStart?: string | null;
+  rangeEnd?: string | null;
 }
 
-export default function TempChart({ data }: TempChartProps) {
+function formatRangeLabel(start?: string | null, end?: string | null): string {
+  if (!start || !end) return 'Variação das temperaturas mínimas e máximas registradas';
+  const [, startMonth, startDay] = start.split('-');
+  const [, endMonth, endDay] = end.split('-');
+  if (start === end) return `Dados de ${startDay}/${startMonth}`;
+  return `${startDay}/${startMonth} – ${endDay}/${endMonth}`;
+}
+
+export default function TempChart({ data, rangeStart, rangeEnd }: TempChartProps) {
   const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
@@ -57,8 +67,8 @@ export default function TempChart({ data }: TempChartProps) {
   return (
     <div className="w-full glass-card rounded-2xl p-6 flex flex-col">
       <div className="mb-4">
-        <h2 className="text-base font-bold text-slate-800 font-display">Tendência Térmica (Últimos 7 dias)</h2>
-        <p className="text-[10px] text-slate-400 font-semibold">Variação das temperaturas mínimas e máximas registradas</p>
+        <h2 className="text-base font-bold text-slate-800 font-display">Tendência Térmica</h2>
+        <p className="text-xs font-semibold text-slate-500">{formatRangeLabel(rangeStart, rangeEnd)}</p>
       </div>
 
       <div className="h-[250px] w-full -ml-4">

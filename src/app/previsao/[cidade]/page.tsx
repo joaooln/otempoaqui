@@ -10,6 +10,7 @@ import {
   getTemperatureChartData 
 } from '../../../utils/db';
 import Header from '../../../components/Header';
+import CitySelector from '../../../components/CitySelector';
 import { getWeatherCondition } from '../../../utils/weatherIcons';
 import HeroForecast from '../../../components/HeroForecast';
 import MetricsGrid from '../../../components/MetricsGrid';
@@ -54,34 +55,7 @@ export default async function CityPage({ params }: PageProps) {
   const latestForecastRaw = getLatestForecast(city.nome);
   const latestForecast = latestForecastRaw ? (() => {
     const { conteudo, ...rest } = latestForecastRaw;
-    const mergedPost = { ...rest };
-    if (mergedPost.dadosMeteorologicos) {
-      const copyMeteorologicos = { ...mergedPost.dadosMeteorologicos };
-      
-      if (copyMeteorologicos.tempMinima === null) {
-        const found = cityPostsRaw.find(p => p.dadosMeteorologicos?.tempMinima !== null);
-        if (found) copyMeteorologicos.tempMinima = found.dadosMeteorologicos.tempMinima;
-      }
-      if (copyMeteorologicos.tempMaxima === null) {
-        const found = cityPostsRaw.find(p => p.dadosMeteorologicos?.tempMaxima !== null);
-        if (found) copyMeteorologicos.tempMaxima = found.dadosMeteorologicos.tempMaxima;
-      }
-      if (copyMeteorologicos.chuvaMm === null) {
-        const found = cityPostsRaw.find(p => p.dadosMeteorologicos?.chuvaMm !== null);
-        if (found) copyMeteorologicos.chuvaMm = found.dadosMeteorologicos.chuvaMm;
-      }
-      if (copyMeteorologicos.ventoKmh === null) {
-        const found = cityPostsRaw.find(p => p.dadosMeteorologicos?.ventoKmh !== null);
-        if (found) copyMeteorologicos.ventoKmh = found.dadosMeteorologicos.ventoKmh;
-      }
-      if (copyMeteorologicos.umidadePct === null) {
-        const found = cityPostsRaw.find(p => p.dadosMeteorologicos?.umidadePct !== null);
-        if (found) copyMeteorologicos.umidadePct = found.dadosMeteorologicos.umidadePct;
-      }
-      
-      mergedPost.dadosMeteorologicos = copyMeteorologicos;
-    }
-    return mergedPost;
+    return rest;
   })() : undefined;
 
   const chartData = getTemperatureChartData(city.nome);
@@ -100,32 +74,22 @@ export default async function CityPage({ params }: PageProps) {
       {/* Navigation Header */}
       <Header />
 
+      {/* City Switcher Tabs */}
+      <CitySelector 
+        cities={allCities} 
+        selectedCity={city.nome} 
+      />
+
       {/* Main Page Layout */}
       <main className="flex-1 max-w-6xl w-full mx-auto px-4 py-6 md:py-8 flex flex-col lg:flex-row gap-6">
         
-        {/* Left Side Column: Weather Dashboard for City */}
+        {/* Left Side Column: Weather Dashboard + Feed */}
         <div className="flex-1 space-y-6">
           
-          {/* Breadcrumb / Back Navigation */}
-          <div className="flex items-center gap-3">
-            <Link
-              href="/"
-              className="inline-flex items-center gap-1 text-xs font-bold text-slate-500 hover:text-slate-800 transition-colors"
-            >
-              <IconArrowLeft className="w-3.5 h-3.5" />
-              <span>Ver todas as cidades</span>
-            </Link>
-            <span className="text-slate-300">/</span>
-            <span className="text-xs font-bold text-slate-400 uppercase tracking-wider flex items-center gap-1 select-none">
-              <IconMapPin className="w-3.5 h-3.5" />
-              <span>{city.nome}</span>
-            </span>
-          </div>
-
-          {/* Header title for the city */}
-          <div className="border-b border-slate-200 pb-3">
-            <h1 className="text-xl font-black text-slate-900 tracking-tight">
-              Previsão do tempo em {city.nome}
+          {/* Page Heading */}
+          <div className="glass-card rounded-2xl p-6">
+            <h1 className="text-xl md:text-2xl font-black text-slate-900 font-display">
+              Previsão do Tempo em {city.nome}
             </h1>
             <p className="text-xs text-slate-400 font-semibold mt-1">
               Boletins climáticos históricos e previsões direcionadas para a região do {city.regiao}.
@@ -147,7 +111,11 @@ export default async function CityPage({ params }: PageProps) {
 
           {/* Temperature Variation Chart */}
           <section aria-label="Histórico de variação de temperatura">
-            <TempChart data={chartData} />
+            <TempChart 
+              data={chartData.points} 
+              rangeStart={chartData.rangeStart} 
+              rangeEnd={chartData.rangeEnd} 
+            />
           </section>
 
           {/* Filterable Posts Feed */}

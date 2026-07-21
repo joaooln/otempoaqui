@@ -6,10 +6,18 @@ import { City } from '../types';
 interface CitySelectorProps {
   cities: City[];
   selectedCity: string;
-  onSelectCity: (cityName: string) => void;
+  onSelectCity?: (cityName: string) => void;
 }
 
 export default function CitySelector({ cities, selectedCity, onSelectCity }: CitySelectorProps) {
+  const handleSelect = (city: City) => {
+    if (onSelectCity) {
+      onSelectCity(city.nome);
+    } else {
+      window.location.href = `/previsao/${city.slug}`;
+    }
+  };
+
   return (
     <div className="w-full border-b border-white/30 bg-white/35 backdrop-blur-lg sticky top-[73px] z-30">
       <div className="max-w-6xl mx-auto px-4">
@@ -20,7 +28,7 @@ export default function CitySelector({ cities, selectedCity, onSelectCity }: Cit
               <button
                 key={city.slug}
                 id={`city-tab-${city.slug}`}
-                onClick={() => onSelectCity(city.nome)}
+                onClick={() => handleSelect(city)}
                 className={`px-4 py-1.5 text-xs font-bold rounded-full transition-all duration-300 whitespace-nowrap cursor-pointer ${
                   isActive
                     ? 'bg-sky-600 text-white shadow-lg shadow-sky-500/25 border border-sky-500'

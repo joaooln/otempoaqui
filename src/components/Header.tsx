@@ -10,18 +10,12 @@ export default function Header() {
       <div className="max-w-6xl mx-auto flex items-center justify-between">
         
         {/* Logo and Brand Title */}
-        <Link href="/" className="flex items-center gap-2 group">
-          <div className="bg-white/50 text-sky-600 p-2 rounded-xl border border-white/55 group-hover:bg-white/80 transition-colors shadow-xs">
-            <IconSun className="w-5 h-5 animate-weather" />
-          </div>
-          <div>
-            <span className="text-base font-black tracking-tight text-slate-950 block leading-none font-display">
-              O Tempo Aqui
-            </span>
-            <span className="text-[9px] text-slate-450 font-bold tracking-wider uppercase block mt-0.5">
-              Previsão do Tempo no Acre
-            </span>
-          </div>
+        <Link href="/" className="flex items-center group">
+          <img 
+            src="/logo.png" 
+            alt="Logo O Tempo Aqui com Davi Friale" 
+            className="h-10 md:h-12 w-auto object-contain transition-transform duration-300 group-hover:scale-[1.02] rounded-lg"
+          />
         </Link>
 
         {/* Small subtitle or info badges */}

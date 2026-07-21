@@ -1,0 +1,218 @@
+[
+  {
+    "id": "46479",
+    "slug": "temperatura-pode-chegar-a-36c-esta-semana-no-acre",
+    "titulo": "Temperatura pode chegar a 36ºC esta semana, no Acre",
+    "tipo": "previsao",
+    "cidade": "Rio Branco",
+    "data": "2026-07-20",
+    "resumo": "Temperaturas podem atingir 36ºC no Acre esta semana com tempo seco e ensolarado na capital e interior.",
+    "conteudo": "<p>A semana começa com forte presença de sol e ar seco em todo o estado do Acre. A temperatura deve subir gradativamente nos próximos dias, podendo alcançar a máxima histórica de 36°C em Rio Branco e no interior.</p><p>A umidade relativa do ar cairá bastante durante as tardes, atingindo níveis de até 35%. É recomendável manter-se hidratado e evitar exposição direta ao sol nas horas mais quentes do dia. Ventos fracos soprando do norte a 12 km/h.</p>",
+    "dadosMeteorologicos": {
+      "tempMinima": 21.8,
+      "tempMaxima": 36.0,
+      "chuvaMm": 0.0,
+      "ventoKmh": 12.0,
+      "umidadePct": 35.0
+    },
+    "autor": "Davi Friale"
+  },
+  {
+    "id": "46480",
+    "slug": "frente-fria-chega-ao-acre-e-derruba-temperaturas-para-15c",
+    "titulo": "Frente fria polar chega ao Acre e derruba temperaturas para até 15ºC",
+    "tipo": "previsao",
+    "cidade": "Rio Branco",
+    "data": "2026-07-18",
+    "resumo": "Uma forte massa de ar polar avança pelo sul da Amazônia, trazendo o fenômeno da friagem ao Acre.",
+    "conteudo": "<p>Preparem os agasalhos! Uma intensa frente fria de origem polar está avançando pela América do Sul e atingirá o Acre nesta quarta-feira. O fenômeno causará uma queda acentuada nas temperaturas, caracterizando mais um evento de friagem.</p><p>Em Rio Branco, a temperatura mínima deve despencar para 15°C durante a madrugada, com máxima de apenas 22°C ao longo do dia. Acompanha esta massa de ar polar ventos persistentes de quadrante sul com rajadas de até 25 km/h, aumentando a sensação de frio.</p>",
+    "dadosMeteorologicos": {
+      "tempMinima": 15.0,
+      "tempMaxima": 22.0,
+      "chuvaMm": 5.0,
+      "ventoKmh": 25.0,
+      "umidadePct": 85.0
+    },
+    "autor": "Davi Friale"
+  },
+  {
+    "id": "46481",
+    "slug": "diario-do-tempo-rio-branco-registra-a-menor-temperatura-do-ano",
+    "titulo": "Diário do Tempo: Rio Branco registra a menor temperatura do ano",
+    "tipo": "diario",
+    "cidade": "Rio Branco",
+    "data": "2026-07-19",
+    "resumo": "Resumo meteorológico do dia anterior detalhando as temperaturas mínimas históricas registradas no Acre.",
+    "conteudo": "<p>Ontem o dia foi marcado pela menor temperatura do ano em Rio Branco e em outras cidades acreanas. A mínima registrada nas estações automáticas foi de 14.8°C na capital, sob a influência da forte friagem.</p><p>Confira as temperaturas registradas em outras cidades parceiras:</p><ul><li>Cruzeiro do Sul: Mínima de 17.5°C, Máxima de 24.2°C</li><li>Brasiléia: Mínima de 13.9°C, Máxima de 21.0°C</li><li>Tarauacá: Mínima de 18.0°C, Máxima de 26.0°C</li></ul>",
+    "dadosMeteorologicos": {
+      "tempMinima": 14.8,
+      "tempMaxima": 21.5,
+      "chuvaMm": 0.0,
+      "ventoKmh": 18.0,
+      "umidadePct": 70.0
+    },
+    "autor": "Davi Friale"
+  },
+  {
+    "id": "46482",
+    "slug": "julho-o-mes-mais-frio-e-seco-no-acre",
+    "titulo": "Julho é o mês mais frio e com menos chuva no Acre; entenda o motivo",
+    "tipo": "artigos",
+    "cidade": "Rio Branco",
+    "data": "2026-07-15",
+    "resumo": "Análise climática detalhada explica a dinâmica das friagens e a ausência de chuvas no inverno amazônico.",
+    "conteudo": "<p>O mês de julho é tradicionalmente conhecido na Região Norte, especialmente no Acre, como o ápice do 'inverno' regional, que paradoxalmente coincide com a estação mais seca do ano. Durante este período, a incidência de frentes frias vindas da Argentina é muito mais frequente.</p><p>As massas de ar polar conseguem transpor as barreiras geográficas e subir pelo vale do rio Paraguai, alcançando o sul da Amazônia Ocidental. Este processo derruba a temperatura e afasta as nuvens de chuva devido ao ar seco de alta pressão.</p>",
+    "dadosMeteorologicos": {
+      "tempMinima": null,
+      "tempMaxima": null,
+      "chuvaMm": null,
+      "ventoKmh": null,
+      "umidadePct": null
+    },
+    "autor": "Davi Friale"
+  },
+  {
+    "id": "46483",
+    "slug": "chuvas-intensas-provocam-alerta-em-cruzeiro-do-sul",
+    "titulo": "Chuvas intensas provocam alerta de inundação em Cruzeiro do Sul",
+    "tipo": "previsao",
+    "cidade": "Cruzeiro do Sul",
+    "data": "2026-07-17",
+    "resumo": "Volume de chuva pode ultrapassar 45mm em Cruzeiro do Sul nesta sexta-feira, ligando alerta para encostas.",
+    "conteudo": "<p>A convergência de umidade vinda do Peru deve causar pancadas de chuva muito fortes na bacia do Juruá. Cruzeiro do Sul e Mâncio Lima correm risco de sofrer com alagamentos pontuais nas próximas 24 horas.</p><p>A estimativa de chuva é de 45mm, com possibilidade de descargas elétricas e ventanias pontuais. A temperatura máxima não deve passar dos 29°C por conta da alta nebulosidade.</p>",
+    "dadosMeteorologicos": {
+      "tempMinima": 22.0,
+      "tempMaxima": 29.0,
+      "chuvaMm": 45.0,
+      "ventoKmh": 20.0,
+      "umidadePct": 95.0
+    },
+    "autor": "Davi Friale"
+  },
+  {
+    "id": "46484",
+    "slug": "brasileia-registra-forte-calor-e-umidade-critica-de-28-percent",
+    "titulo": "Brasiléia registra forte calor e umidade em nível crítico de 28%",
+    "tipo": "diario",
+    "cidade": "Brasiléia",
+    "data": "2026-07-16",
+    "resumo": "Tarde extremamente quente e seca na região do Alto Acre liga alerta para riscos de queimadas.",
+    "conteudo": "<p>A região do Alto Acre registrou ontem índices alarmantes de umidade relativa do ar. Na cidade de Brasiléia, os termômetros das estações oficiais alcançaram 36.4°C no início da tarde, com a umidade despencando para 28%.</p><p>Nestas condições meteorológicas, qualquer faísca pode dar início a grandes incêndios florestais. Recomenda-se hidratação contínua para evitar problemas respiratórios.</p>",
+    "dadosMeteorologicos": {
+      "tempMinima": 20.5,
+      "tempMaxima": 36.4,
+      "chuvaMm": 0.0,
+      "ventoKmh": 8.0,
+      "umidadePct": 28.0
+    },
+    "autor": "Davi Friale"
+  },
+  {
+    "id": "46485",
+    "slug": "tempo-quente-e-abafado-predomina-em-sena-madureira",
+    "titulo": "Tempo quente e abafado predomina em Sena Madureira nas próximas horas",
+    "tipo": "previsao",
+    "cidade": "Sena Madureira",
+    "data": "2026-07-20",
+    "resumo": "Previsão indica possibilidade de pancadas de chuva isoladas com trovoadas no final da tarde.",
+    "conteudo": "<p>A população de Sena Madureira enfrentará um dia de muito abafamento. O sol predomina pela manhã, elevando a temperatura rapidamente para 34°C, mas a alta umidade favorece a formação de nuvens de tempestade localizadas.</p><p>Chuva estimada de 12mm em curtos intervalos ao final da tarde. Umidade variando entre 55% e 92%.</p>",
+    "dadosMeteorologicos": {
+      "tempMinima": 23.0,
+      "tempMaxima": 34.0,
+      "chuvaMm": 12.0,
+      "ventoKmh": 10.0,
+      "umidadePct": 55.0
+    },
+    "autor": "Davi Friale"
+  },
+  {
+    "id": "46486",
+    "slug": "tarauaca-lidera-temperaturas-maximas-na-regiao",
+    "titulo": "Tarauacá lidera temperaturas máximas no estado com registro de 37°C",
+    "tipo": "diario",
+    "cidade": "Tarauacá",
+    "data": "2026-07-19",
+    "resumo": "Mais um dia de calor sufocante no município de Tarauacá, com recorde semanal de temperatura.",
+    "conteudo": "<p>Ontem, Tarauacá registrou o maior pico de temperatura do Acre, atingindo a marca de 37.0°C às 14h30. O vento calmo e a falta de nuvens amplificaram a sensação de calor na cidade.</p><p>Para os próximos dias, o cenário de calor persistirá sem previsão de chuva significativa.</p>",
+    "dadosMeteorologicos": {
+      "tempMinima": 22.4,
+      "tempMaxima": 37.0,
+      "chuvaMm": 0.0,
+      "ventoKmh": 5.0,
+      "umidadePct": 32.0
+    },
+    "autor": "Davi Friale"
+  },
+  {
+    "id": "46487",
+    "slug": "massa-de-ar-seco-afasta-chuvas-de-tarauaca",
+    "titulo": "Massa de ar seco afasta chuvas de Tarauacá por tempo indeterminado",
+    "tipo": "previsao",
+    "cidade": "Tarauacá",
+    "data": "2026-07-20",
+    "resumo": "Bloqueio atmosférico mantém dias ensolarados e sem probabilidade de chuva em Tarauacá.",
+    "conteudo": "<p>A previsão do tempo para Tarauacá nas próximas semanas aponta para a persistência de uma forte massa de ar seco de alta pressão. As chances de chuva nos próximos 10 dias são nulas.</p><p>As temperaturas se manterão altas, oscilando entre a mínima de 22°C e a máxima de 35°C, com umidade do ar perto de 40% nas horas críticas.</p>",
+    "dadosMeteorologicos": {
+      "tempMinima": 22.0,
+      "tempMaxima": 35.0,
+      "chuvaMm": 0.0,
+      "ventoKmh": 6.0,
+      "umidadePct": 40.0
+    },
+    "autor": "Davi Friale"
+  },
+  {
+    "id": "46488",
+    "slug": "o-que-e-o-fenomeno-da-friagem-que-ocorre-no-acre",
+    "titulo": "O que é o fenômeno da friagem que ocorre frequentemente no Acre?",
+    "tipo": "artigos",
+    "cidade": "Rio Branco",
+    "data": "2026-07-10",
+    "resumo": "Explicamos detalhadamente a mecânica por trás das friagens na Amazônia e como elas impactam a fauna e flora local.",
+    "conteudo": "<p>Muitas pessoas de fora da Região Norte se surpreendem ao saber que no Acre as temperaturas podem cair para 12°C ou menos. Esse fenômeno é conhecido como 'friagem', a queda brusca de temperatura provocada pela penetração de frentes frias de origem polar.</p><p>Diferente do Sul e Sudeste, onde a altitude ajuda a manter o frio, a friagem na Amazônia é rápida e intensa devido à planície que serve como corredor para a massa polar. O vento persistente do quadrante sul é o principal indicador de que a friagem está se instalando.</p>",
+    "dadosMeteorologicos": {
+      "tempMinima": null,
+      "tempMaxima": null,
+      "chuvaMm": null,
+      "ventoKmh": null,
+      "umidadePct": null
+    },
+    "autor": "Davi Friale"
+  },
+  {
+    "id": "46489",
+    "slug": "cruzeiro-do-sul-registra-tarde-agradavel-apos-chuva",
+    "titulo": "Cruzeiro do Sul registra tarde agradável de 25°C após chuvas matinais",
+    "tipo": "diario",
+    "cidade": "Cruzeiro do Sul",
+    "data": "2026-07-18",
+    "resumo": "Clima ameno em Cruzeiro do Sul por conta da chuva contínua que acumulou 22mm.",
+    "conteudo": "<p>A população de Cruzeiro do Sul teve um alívio do calor no dia de ontem. Fortes chuvas matinais limparam o céu e trouxeram um clima bastante agradável para a tarde, com termômetros marcando máxima de apenas 25.6°C.</p><p>O acumulado de chuva nas últimas 24 horas totalizou 22mm na região central do município.</p>",
+    "dadosMeteorologicos": {
+      "tempMinima": 20.8,
+      "tempMaxima": 25.6,
+      "chuvaMm": 22.0,
+      "ventoKmh": 14.0,
+      "umidadePct": 88.0
+    },
+    "autor": "Davi Friale"
+  },
+  {
+    "id": "46490",
+    "slug": "previsao-tempo-brasileia-esta-semana",
+    "titulo": "Previsão indica calor constante e madrugadas frescas em Brasiléia",
+    "tipo": "previsao",
+    "cidade": "Brasiléia",
+    "data": "2026-07-20",
+    "resumo": "Alta amplitude térmica marcará os próximos dias na fronteira com a Bolívia, com mínimas de 18°C.",
+    "conteudo": "<p>Os moradores de Brasiléia e Epitaciolândia devem se preparar para uma semana de grande amplitude térmica. As madrugadas serão frescas, com mínima de 18°C nas primeiras horas do dia, mas o sol forte fará a temperatura subir rapidamente para 34°C à tarde.</p><p>Não há previsão de chuva para os próximos 5 dias. A umidade estará em queda, atingindo 40% nas horas mais quentes.</p>",
+    "dadosMeteorologicos": {
+      "tempMinima": 18.0,
+      "tempMaxima": 34.0,
+      "chuvaMm": 0.0,
+      "ventoKmh": 9.0,
+      "umidadePct": 40.0
+    },
+    "autor": "Davi Friale"
+  }
+]

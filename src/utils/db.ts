@@ -1,0 +1,85 @@
+import { Post, City } from '../types';
+import postsRaw from '../../data/posts.json';
+import citiesRaw from '../../data/cidades.json';
+
+// Typecast the raw JSON data
+export const posts: Post[] = postsRaw as Post[];
+export const cities: City[] = citiesRaw as City[];
+
+// Get all cities
+export function getCities(): City[] {
+  return cities;
+}
+
+// Get city by slug
+export function getCityBySlug(slug: string): City | undefined {
+  return cities.find(c => c.slug === slug);
+}
+
+// Get city by name
+export function getCityByName(name: string): City | undefined {
+  return cities.find(c => c.nome.toLowerCase() === name.toLowerCase());
+}
+
+// Get posts filtered by city name
+export function getPostsByCity(cityName: string): Post[] {
+  return posts.filter(p => p.cidade.toLowerCase() === cityName.toLowerCase());
+}
+
+// Get post by slug
+export function getPostBySlug(slug: string): Post | undefined {
+  return posts.find(p => p.slug === slug);
+}
+
+// Get the latest weather forecast for a city
+export function getLatestForecast(cityName: string): Post | undefined {
+  const cityPosts = getPostsByCity(cityName);
+  
+  // Try to find the latest "previsao" with valid temp data
+  const forecast = cityPosts.find(
+    p => p.tipo === 'previsao' && 
+    p.dadosMeteorologicos && 
+    (p.dadosMeteorologicos.tempMaxima !== null || p.dadosMeteorologicos.tempMinima !== null)
+  );
+
+  if (forecast) return forecast;
+
+  // Fallback to the absolute latest post for this city
+  return cityPosts[0];
+}
+
+// Get the 7 most recent posts with temperature data for the chart, sorted chronologically
+export function getTemperatureChartData(cityName: string) {
+  const cityPosts = getPostsByCity(cityName);
+  
+  // Filter posts that have both tempMinima and tempMaxima
+  const tempPosts = cityPosts.filter(
+    p => p.dadosMeteorologicos && 
+    p.dadosMeteorologicos.tempMinima !== null && 
+    p.dadosMeteorologicos.tempMaxima !== null
+  );
+
+  // Take the 7 most recent
+  const sliced = tempPosts.slice(0, 7);
+
+  // Return formatted and sorted chronologically (date asc)
+  return sliced.map(p => ({
+    date: formatDateLabel(p.data),
+    min: p.dadosMeteorologicos.tempMinima,
+    max: p.dadosMeteorologicos.tempMaxima,
+    rawDate: p.data
+  })).reverse(); // Reverse so it goes past-to-present (left-to-right on chart)
+}
+
+// Helper to format date string e.g. "2026-07-20" -> "20/07"
+function formatDateLabel(dateStr: string): string {
+  try {
+    const [_, month, day] = dateStr.split('-');
+    if (day && month) {
+      return `${day}/${month}`;
+    }
+    return dateStr;
+  } catch {
+    return dateStr;
+  }
+}

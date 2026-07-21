@@ -1,0 +1,37 @@
+[
+  {
+    "nome": "Rio Branco",
+    "slug": "rio-branco",
+    "latitude": -9.974,
+    "longitude": -67.808,
+    "regiao": "Baixo Acre"
+  },
+  {
+    "nome": "Cruzeiro do Sul",
+    "slug": "cruzeiro-do-sul",
+    "latitude": -7.631,
+    "longitude": -72.674,
+    "regiao": "Juruá"
+  },
+  {
+    "nome": "Brasiléia",
+    "slug": "brasileia",
+    "latitude": -11.016,
+    "longitude": -68.748,
+    "regiao": "Alto Acre"
+  },
+  {
+    "nome": "Sena Madureira",
+    "slug": "sena-madureira",
+    "latitude": -9.066,
+    "longitude": -68.657,
+    "regiao": "Purus"
+  },
+  {
+    "nome": "Tarauacá",
+    "slug": "tarauaca",
+    "latitude": -8.161,
+    "longitude": -70.766,
+    "regiao": "Tarauacá-Envira"
+  }
+]

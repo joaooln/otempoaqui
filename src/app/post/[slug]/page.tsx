@@ -189,7 +189,7 @@ export default async function PostPage({ params }: PageProps) {
 
           {/* Article HTML Body */}
           <div 
-            className="wp-content prose max-w-none text-slate-750"
+            className="wp-content prose prose-slate max-w-none text-slate-700 font-sans leading-relaxed prose-headings:font-display prose-headings:font-black prose-a:text-sky-600 hover:prose-a:text-sky-750 prose-img:rounded-xl prose-img:shadow-xs prose-strong:text-slate-900"
             dangerouslySetInnerHTML={{ __html: post.conteudo }}
           />
 

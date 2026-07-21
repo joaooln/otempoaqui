@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { posts, cities } from '../utils/db';
+import { getPostSummaries, cities } from '../utils/db';
 import HomeDashboard from '../components/HomeDashboard';
 
 export const metadata: Metadata = {
@@ -19,7 +19,7 @@ export const metadata: Metadata = {
 export default function Page() {
   return (
     <HomeDashboard 
-      initialPosts={posts} 
+      initialPosts={getPostSummaries()} 
       initialCities={cities} 
     />
   );

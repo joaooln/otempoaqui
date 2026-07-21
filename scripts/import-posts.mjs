@@ -1,6 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import sanitizeHtml from 'sanitize-html';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -42,6 +43,23 @@ function cleanHTML(html) {
   return html.replace(/<[^>]*>/g, ' ')
              .replace(/\s+/g, ' ')
              .trim();
+}
+
+function sanitizeContent(html) {
+  return sanitizeHtml(html, {
+    allowedTags: [
+      'p', 'br', 'strong', 'em', 'b', 'i', 'u', 'a', 'ul', 'ol', 'li',
+      'h2', 'h3', 'h4', 'blockquote', 'img', 'figure', 'figcaption', 'hr', 'table', 'thead', 'tbody', 'tr', 'th', 'td'
+    ],
+    allowedAttributes: {
+      a: ['href', 'target', 'rel'],
+      img: ['src', 'alt', 'width', 'height', 'loading']
+    },
+    disallowedTagsMode: 'discard',
+    transformTags: {
+      'div': 'p'
+    }
+  });
 }
 
 function inferCity(title, content) {
@@ -228,7 +246,7 @@ async function main() {
         cidade,
         data: date,
         resumo: cleanHTML(excerpt) || cleanContent.substring(0, 160) + '...',
-        conteudo: rawContent,
+        conteudo: sanitizeContent(rawContent),
         dadosMeteorologicos,
         autor: "Davi Friale" // Meteorologista principal
       };

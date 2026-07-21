@@ -5,7 +5,7 @@ import {
   IconCloudRain, 
   IconSnowflake
 } from '@tabler/icons-react';
-import { Post } from '../types';
+import { Post, PostSummary } from '../types';
 
 export interface WeatherCondition {
   label: string;
@@ -15,7 +15,7 @@ export interface WeatherCondition {
   borderClass: string;
 }
 
-export function getWeatherCondition(post?: Post): WeatherCondition {
+export function getWeatherCondition(post?: Post | PostSummary): WeatherCondition {
   if (!post) {
     return {
       label: 'Tempo Estável',
@@ -27,7 +27,7 @@ export function getWeatherCondition(post?: Post): WeatherCondition {
   }
 
   const title = post.titulo.toLowerCase();
-  const content = post.conteudo.toLowerCase();
+  const content = ('conteudo' in post && typeof post.conteudo === 'string' ? post.conteudo : '').toLowerCase();
   const text = `${title} ${content}`;
   
   const hasRainVal = post.dadosMeteorologicos?.chuvaMm !== null && post.dadosMeteorologicos.chuvaMm > 0;

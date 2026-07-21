@@ -19,6 +19,8 @@ export interface Post {
   autor: string;
 }
 
+export type PostSummary = Omit<Post, 'conteudo'>;
+
 export interface City {
   nome: string;
   slug: string;

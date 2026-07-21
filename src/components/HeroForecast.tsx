@@ -2,12 +2,12 @@
 
 import React from 'react';
 import Link from 'next/link';
-import { Post } from '../types';
+import { PostSummary } from '../types';
 import { getWeatherCondition } from '../utils/weatherIcons';
 import { IconArrowRight } from '@tabler/icons-react';
 
 interface HeroForecastProps {
-  post?: Post;
+  post?: PostSummary;
   cityName: string;
 }
 

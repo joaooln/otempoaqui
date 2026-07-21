@@ -1,10 +1,15 @@
-import { Post, City } from '../types';
+import { Post, City, PostSummary } from '../types';
 import postsRaw from '../../data/posts.json';
 import citiesRaw from '../../data/cidades.json';
 
 // Typecast the raw JSON data
 export const posts: Post[] = postsRaw as Post[];
 export const cities: City[] = citiesRaw as City[];
+
+// Get all posts as summaries (no conteudo field)
+export function getPostSummaries(): PostSummary[] {
+  return posts.map(({ conteudo, ...rest }) => rest);
+}
 
 // Get all cities
 export function getCities(): City[] {

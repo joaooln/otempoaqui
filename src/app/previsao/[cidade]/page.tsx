@@ -48,8 +48,15 @@ export default async function CityPage({ params }: PageProps) {
   }
 
   const allCities = getCities();
-  const cityPosts = getPostsByCity(city.nome);
-  const latestForecast = getLatestForecast(city.nome);
+  const cityPostsRaw = getPostsByCity(city.nome);
+  const cityPosts = cityPostsRaw.map(({ conteudo, ...rest }) => rest);
+
+  const latestForecastRaw = getLatestForecast(city.nome);
+  const latestForecast = latestForecastRaw ? (() => {
+    const { conteudo, ...rest } = latestForecastRaw;
+    return rest;
+  })() : undefined;
+
   const chartData = getTemperatureChartData(city.nome);
   const recent7PostsForMetrics = cityPosts.slice(0, 7);
 

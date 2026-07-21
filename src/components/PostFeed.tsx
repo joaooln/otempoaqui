@@ -2,7 +2,7 @@
 
 import React, { useState, useMemo } from 'react';
 import Link from 'next/link';
-import { Post } from '../types';
+import { PostSummary } from '../types';
 import { getWeatherCondition } from '../utils/weatherIcons';
 import { 
   IconCalendar, 
@@ -13,7 +13,7 @@ import {
 } from '@tabler/icons-react';
 
 interface PostFeedProps {
-  posts: Post[];
+  posts: PostSummary[];
 }
 
 export default function PostFeed({ posts }: PostFeedProps) {

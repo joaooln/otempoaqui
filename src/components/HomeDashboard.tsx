@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useMemo } from 'react';
-import { Post, City } from '../types';
+import { PostSummary, City } from '../types';
 import CitySelector from './CitySelector';
 import HeroForecast from './HeroForecast';
 import MetricsGrid from './MetricsGrid';
@@ -12,7 +12,7 @@ import Header from './Header';
 import { getWeatherCondition } from '../utils/weatherIcons';
 
 interface HomeDashboardProps {
-  initialPosts: Post[];
+  initialPosts: PostSummary[];
   initialCities: City[];
 }
 

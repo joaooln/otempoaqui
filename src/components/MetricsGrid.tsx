@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { Post } from '../types';
+import { PostSummary } from '../types';
 import { 
   IconWind, 
   IconCloudRain, 
@@ -10,8 +10,8 @@ import {
 } from '@tabler/icons-react';
 
 interface MetricsGridProps {
-  currentPost?: Post;
-  last7DaysPosts: Post[];
+  currentPost?: PostSummary;
+  last7DaysPosts: PostSummary[];
 }
 
 export default function MetricsGrid({ currentPost, last7DaysPosts }: MetricsGridProps) {

@@ -14,7 +14,7 @@ export default function Header() {
           <img 
             src="/logo.png" 
             alt="Logo O Tempo Aqui com Davi Friale" 
-            className="h-10 md:h-12 w-auto object-contain transition-transform duration-300 group-hover:scale-[1.02] rounded-lg"
+            className="h-14 md:h-18 w-auto object-contain transition-transform duration-300 group-hover:scale-[1.02] rounded-lg"
           />
         </Link>
 

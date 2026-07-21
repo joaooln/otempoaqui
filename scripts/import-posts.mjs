@@ -81,7 +81,34 @@ function inferCity(title, content) {
   return 'Rio Branco'; // Default fallback
 }
 
-function parseMeteorologicalData(title, cleanContent) {
+function parseDiarioTemperatures(cleanText, cidade) {
+  const result = { tempMinima: null, tempMaxima: null };
+
+  const cidadeEscaped = cidade.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+
+  // Use \s+ instead of literal space to support non-breaking spaces (\xa0)
+  const menoresBlockMatch = cleanText.match(/MENORES\s+TEMPERATURAS([\s\S]*?)(?:MAIORES\s+TEMPERATURAS|$)/i);
+  const maioresBlockMatch = cleanText.match(/MAIORES\s+TEMPERATURAS([\s\S]*?)(?:CAPITAIS|ACRE|CHUVAS|$)/i);
+
+  const cityLineRegex = new RegExp(
+    `${cidadeEscaped}\\s*:?\\s*(\\d+(?:[.,]\\d+)?)\\s*(?:°|º)?\\s*C`,
+    'i'
+  );
+
+  if (menoresBlockMatch) {
+    const match = menoresBlockMatch[1].match(cityLineRegex);
+    if (match) result.tempMinima = parseFloat(match[1].replace(',', '.'));
+  }
+
+  if (maioresBlockMatch) {
+    const match = maioresBlockMatch[1].match(cityLineRegex);
+    if (match) result.tempMaxima = parseFloat(match[1].replace(',', '.'));
+  }
+
+  return result;
+}
+
+function parseMeteorologicalData(title, cleanContent, cidade, tipo, rawHtml) {
   const data = {
     tempMinima: null,
     tempMaxima: null,
@@ -92,33 +119,43 @@ function parseMeteorologicalData(title, cleanContent) {
 
   const textToParse = `${title} ${cleanContent}`;
 
+  if (tipo === 'diario') {
+    const diarioTemps = parseDiarioTemperatures(textToParse, cidade);
+    data.tempMinima = diarioTemps.tempMinima;
+    data.tempMaxima = diarioTemps.tempMaxima;
+  }
+
   // Parse Temp Minima
   // Examples: "mínima de 21°C", "mínima entre 20°C e 22°C", "mínimas oscilam entre 19 e 21°C"
-  const minRegexes = [
-    /mínima(?:s)?\s+(?:de|entre|fica\s+em|atinge\s+a)?\s*(\d+(?:[.,]\d+)?)\s*(?:°|º|o)?\s*C/i,
-    /temperatura\s+mínima\s+(?:de\s+)?(\d+(?:[.,]\d+)?)/i,
-    /mínima(?:s)?\s+(?:de\s+)?(\d+(?:[.,]\d+)?)\s*graus/i
-  ];
-  for (const regex of minRegexes) {
-    const match = textToParse.match(regex);
-    if (match) {
-      data.tempMinima = parseFloat(match[1].replace(',', '.'));
-      break;
+  if (data.tempMinima === null) {
+    const minRegexes = [
+      /mínima(?:s)?\s+(?:de|entre|fica\s+em|atinge\s+a)?\s*(\d+(?:[.,]\d+)?)\s*(?:°|º|o)?\s*C/i,
+      /temperatura\s+mínima\s+(?:de\s+)?(\d+(?:[.,]\d+)?)/i,
+      /mínima(?:s)?\s+(?:de\s+)?(\d+(?:[.,]\d+)?)\s*graus/i
+    ];
+    for (const regex of minRegexes) {
+      const match = textToParse.match(regex);
+      if (match) {
+        data.tempMinima = parseFloat(match[1].replace(',', '.'));
+        break;
+      }
     }
   }
 
   // Parse Temp Maxima
   // Examples: "máxima de 36°C", "máximas chegam a 35°C", "temperatura máxima de 32 graus"
-  const maxRegexes = [
-    /máxima(?:s)?\s+(?:de|entre|fica\s+em|atinge\s+a|chega\s+a)?\s*(\d+(?:[.,]\d+)?)\s*(?:°|º|o)?\s*C/i,
-    /temperatura\s+máxima\s+(?:de\s+)?(\d+(?:[.,]\d+)?)/i,
-    /máxima(?:s)?\s+(?:de\s+)?(\d+(?:[.,]\d+)?)\s*graus/i
-  ];
-  for (const regex of maxRegexes) {
-    const match = textToParse.match(regex);
-    if (match) {
-      data.tempMaxima = parseFloat(match[1].replace(',', '.'));
-      break;
+  if (data.tempMaxima === null) {
+    const maxRegexes = [
+      /máxima(?:s)?\s+(?:de|entre|fica\s+em|atinge\s+a|chega\s+a)?\s*(\d+(?:[.,]\d+)?)\s*(?:°|º|o)?\s*C/i,
+      /temperatura\s+máxima\s+(?:de\s+)?(\d+(?:[.,]\d+)?)/i,
+      /máxima(?:s)?\s+(?:de\s+)?(\d+(?:[.,]\d+)?)\s*graus/i
+    ];
+    for (const regex of maxRegexes) {
+      const match = textToParse.match(regex);
+      if (match) {
+        data.tempMaxima = parseFloat(match[1].replace(',', '.'));
+        break;
+      }
     }
   }
 
@@ -229,14 +266,14 @@ async function main() {
     const processedPosts = posts.map(post => {
       const title = decode(post.title?.rendered || '');
       const rawContent = post.content?.rendered || '';
-      const cleanContent = cleanHTML(rawContent);
+      const cleanContent = decode(cleanHTML(rawContent));
       const excerpt = post.excerpt?.rendered || '';
       const date = post.date ? post.date.substring(0, 10) : new Date().toISOString().substring(0, 10);
       
       const postCategories = (post.categories || []).map(catId => categoryMap[catId] || '');
       const tipo = determinePostType(postCategories, title);
       const cidade = inferCity(title, cleanContent);
-      const dadosMeteorologicos = parseMeteorologicalData(title, cleanContent);
+      const dadosMeteorologicos = parseMeteorologicalData(title, cleanContent, cidade, tipo, rawContent);
 
       return {
         id: String(post.id),

@@ -2,6 +2,9 @@ import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import sanitizeHtml from 'sanitize-html';
+import he from 'he';
+
+const { decode } = he;
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -224,7 +227,7 @@ async function main() {
     // 3. Process and sanitize posts
     console.log('Processando e estruturando os posts...');
     const processedPosts = posts.map(post => {
-      const title = post.title?.rendered || '';
+      const title = decode(post.title?.rendered || '');
       const rawContent = post.content?.rendered || '';
       const cleanContent = cleanHTML(rawContent);
       const excerpt = post.excerpt?.rendered || '';
@@ -242,7 +245,7 @@ async function main() {
         tipo,
         cidade,
         data: date,
-        resumo: cleanHTML(excerpt) || cleanContent.substring(0, 160) + '...',
+        resumo: decode(cleanHTML(excerpt) || cleanContent.substring(0, 160) + '...'),
         conteudo: sanitizeContent(rawContent),
         dadosMeteorologicos,
         autor: "Davi Friale" // Meteorologista principal

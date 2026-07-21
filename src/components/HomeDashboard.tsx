@@ -26,30 +26,24 @@ export default function HomeDashboard({ initialPosts, initialCities }: HomeDashb
 
   // Find the latest weather forecast for this city
   const latestForecast = useMemo(() => {
-    const forecast = cityPosts.find(
-      p => p.tipo === 'previsao' && 
-      p.dadosMeteorologicos && 
-      (p.dadosMeteorologicos.tempMaxima !== null || p.dadosMeteorologicos.tempMinima !== null)
-    );
+    const forecast = cityPosts.find(p => p.tipo === 'previsao');
     return forecast || cityPosts[0]; // fallback to latest post if no structured forecast
   }, [cityPosts]);
 
   // Extract the 7 most recent records with temperature data for the chart, sorted chronologically
   const chartData = useMemo(() => {
-    const tempPosts = cityPosts.filter(
-      p => p.dadosMeteorologicos && 
-      p.dadosMeteorologicos.tempMinima !== null && 
-      p.dadosMeteorologicos.tempMaxima !== null
-    );
+    const recentPosts = cityPosts
+      .filter(p => p.tipo === 'previsao' || p.tipo === 'diario')
+      .slice(0, 7);
     
-    return tempPosts
-      .slice(0, 7)
+    return recentPosts
+      .filter(p => p.dadosMeteorologicos && p.dadosMeteorologicos.tempMinima !== null && p.dadosMeteorologicos.tempMaxima !== null)
       .map(p => {
         const [_, month, day] = p.data.split('-');
         return {
           date: day && month ? `${day}/${month}` : p.data,
-          min: p.dadosMeteorologicos.tempMinima,
-          max: p.dadosMeteorologicos.tempMaxima,
+          min: p.dadosMeteorologicos!.tempMinima,
+          max: p.dadosMeteorologicos!.tempMaxima,
           rawDate: p.data
         };
       })

@@ -40,40 +40,27 @@ export function getPostBySlug(slug: string): Post | undefined {
 export function getLatestForecast(cityName: string): Post | undefined {
   const cityPosts = getPostsByCity(cityName);
   
-  // Try to find the latest "previsao" with valid temp data
-  const forecast = cityPosts.find(
-    p => p.tipo === 'previsao' && 
-    p.dadosMeteorologicos && 
-    (p.dadosMeteorologicos.tempMaxima !== null || p.dadosMeteorologicos.tempMinima !== null)
-  );
-
-  if (forecast) return forecast;
-
-  // Fallback to the absolute latest post for this city
-  return cityPosts[0];
+  // Sempre retorna o post de previsão mais recente, tenha ou não dados extraídos
+  const latestPrevisao = cityPosts.find(p => p.tipo === 'previsao');
+  
+  return latestPrevisao || cityPosts[0];
 }
 
 // Get the 7 most recent posts with temperature data for the chart, sorted chronologically
 export function getTemperatureChartData(cityName: string) {
-  const cityPosts = getPostsByCity(cityName);
-  
-  // Filter posts that have both tempMinima and tempMaxima
-  const tempPosts = cityPosts.filter(
-    p => p.dadosMeteorologicos && 
-    p.dadosMeteorologicos.tempMinima !== null && 
-    p.dadosMeteorologicos.tempMaxima !== null
-  );
+  const cityPosts = getPostsByCity(cityName)
+    .filter(p => p.tipo === 'previsao' || p.tipo === 'diario')
+    .slice(0, 7); // os 7 posts mais recentes, tenham dado ou não
 
-  // Take the 7 most recent
-  const sliced = tempPosts.slice(0, 7);
-
-  // Return formatted and sorted chronologically (date asc)
-  return sliced.map(p => ({
-    date: formatDateLabel(p.data),
-    min: p.dadosMeteorologicos.tempMinima,
-    max: p.dadosMeteorologicos.tempMaxima,
-    rawDate: p.data
-  })).reverse(); // Reverse so it goes past-to-present (left-to-right on chart)
+  return cityPosts
+    .filter(p => p.dadosMeteorologicos && p.dadosMeteorologicos.tempMinima !== null && p.dadosMeteorologicos.tempMaxima !== null)
+    .map(p => ({
+      date: formatDateLabel(p.data),
+      min: p.dadosMeteorologicos!.tempMinima,
+      max: p.dadosMeteorologicos!.tempMaxima,
+      rawDate: p.data
+    }))
+    .reverse(); // Reverse so it goes past-to-present (left-to-right on chart)
 }
 
 // Helper to format date string e.g. "2026-07-20" -> "20/07"

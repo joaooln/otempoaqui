@@ -17,6 +17,10 @@ const inter = Inter({
 export const metadata: Metadata = {
   title: "O Tempo Aqui",
   description: "Redesign Protótipo Paralelo",
+  robots: {
+    index: false,
+    follow: false,
+  },
 };
 
 export default function RootLayout({

@@ -55,10 +55,7 @@ function sanitizeContent(html) {
       a: ['href', 'target', 'rel'],
       img: ['src', 'alt', 'width', 'height', 'loading']
     },
-    disallowedTagsMode: 'discard',
-    transformTags: {
-      'div': 'p'
-    }
+    exclusiveFilter: (frame) => frame.tag === 'div' && frame.text.trim() === ''
   });
 }
 

@@ -11,7 +11,6 @@ export const metadata: Metadata = {
     description: 'Boletins diários, previsão e histórico de temperaturas para as principais cidades do Acre.',
     type: 'website',
     locale: 'pt_BR',
-    url: 'https://otempoaqui.com.br/',
     siteName: 'O Tempo Aqui Redesign'
   }
 };

@@ -160,12 +160,4 @@ body {
   margin: 2rem 0;
 }
 
-/* Custom tooltips and elements styling */
-.wp-block-cover__background {
-  opacity: 0.1;
-}
-.wp-block-cover {
-  border-radius: 12px;
-  overflow: hidden;
-  margin: 1.5rem 0;
-}
+

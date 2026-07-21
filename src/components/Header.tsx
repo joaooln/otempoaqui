@@ -6,7 +6,7 @@ import { IconSun } from '@tabler/icons-react';
 
 export default function Header() {
   return (
-    <header className="w-full glass-header py-3 px-4 sticky top-0 z-45">
+    <header className="w-full glass-header py-2 px-4 sticky top-0 z-45">
       <div className="max-w-6xl mx-auto flex items-center justify-between">
         
         {/* Logo and Brand Title */}
@@ -14,7 +14,7 @@ export default function Header() {
           <img 
             src="/logo.png" 
             alt="Logo O Tempo Aqui com Davi Friale" 
-            className="h-14 md:h-18 w-auto object-contain transition-transform duration-300 group-hover:scale-[1.02] rounded-lg"
+            className="h-20 md:h-24 w-auto object-contain transition-transform duration-300 group-hover:scale-[1.02] rounded-lg"
           />
         </Link>
 

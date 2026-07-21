@@ -69,8 +69,8 @@ export default function PostFeed({ posts }: PostFeedProps) {
     <div className="space-y-6">
       
       {/* Category Tab Switcher and Search Input */}
-      <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
-        <div className="flex gap-1.5 p-1 bg-white/20 backdrop-blur-md rounded-full border border-white/30 shadow-xs">
+      <div className="flex flex-wrap items-center justify-between gap-3">
+        <div className="flex flex-wrap sm:flex-nowrap gap-1.5 p-1 bg-white/20 backdrop-blur-md rounded-full border border-white/30 shadow-xs">
           {tabsConfig.map(tab => {
             const isActive = activeTab === tab.id;
             const Icon = tab.icon;
@@ -95,7 +95,7 @@ export default function PostFeed({ posts }: PostFeedProps) {
         </div>
 
         {/* Live Search Input */}
-        <div className="relative flex-1 max-w-xs">
+        <div className="relative w-full sm:w-auto sm:min-w-[240px] flex-shrink-0">
           <input
             type="text"
             value={searchQuery}
@@ -103,7 +103,7 @@ export default function PostFeed({ posts }: PostFeedProps) {
               setSearchQuery(e.target.value);
               setVisibleCount(10);
             }}
-            placeholder="Buscar por assunto, frio, chuva..."
+            placeholder="Buscar por assunto..."
             className="w-full pl-8 pr-8 py-1.5 text-xs font-semibold text-slate-800 bg-white/30 border border-white/40 rounded-full focus:outline-none focus:bg-white/70 focus:border-sky-400 transition-all placeholder:text-slate-400 shadow-xs"
           />
           <IconSearch className="w-3.5 h-3.5 text-slate-400 absolute left-2.5 top-1/2 -translate-y-1/2 pointer-events-none" />

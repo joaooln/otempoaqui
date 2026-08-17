@@ -88,8 +88,35 @@ export default async function PostPage({ params }: PageProps) {
   else if (condition.label === 'Calor Intenso') skyClass = 'sky-calor';
   else if (condition.label === 'Parcialmente Nublado') skyClass = 'sky-nublado';
 
+  // JSON-LD structured data for SEO Google News
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'NewsArticle',
+    headline: post.titulo,
+    description: post.resumo,
+    datePublished: post.data,
+    author: {
+      '@type': 'Person',
+      name: post.autor,
+      jobTitle: 'Meteorologista'
+    },
+    publisher: {
+      '@type': 'Organization',
+      name: 'O Tempo Aqui',
+      url: 'https://otempoaqui.vercel.app'
+    },
+    contentLocation: {
+      '@type': 'Place',
+      name: `${post.cidade}, Acre, Brasil`
+    }
+  };
+
   return (
     <div className={`flex flex-col min-h-screen transition-all duration-1000 ${skyClass}`}>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <Header />
 
       <main className="flex-1 max-w-6xl w-full mx-auto px-4 py-6 md:py-8 flex flex-col lg:flex-row gap-6">

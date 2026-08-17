@@ -21,7 +21,7 @@ export default function Header() {
         {/* Small subtitle or info badges */}
         <div className="hidden sm:flex items-center gap-3">
           <span className="text-xs font-bold text-slate-450">
-            Protótipo de Redesign
+            Fuso Acre (UTC-5)
           </span>
           <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
           <span className="text-[10px] font-extrabold text-emerald-700 bg-emerald-50/50 border border-emerald-200 px-2.5 py-0.5 rounded-full shadow-xs">

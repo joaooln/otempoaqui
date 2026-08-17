@@ -3,7 +3,8 @@
 import React from 'react';
 import Link from 'next/link';
 import PixCard from './PixCard';
-import { City } from '../types';
+import { PostSummary, City } from '../types';
+import { getPostSummaries } from '../utils/db';
 import { 
   IconBrandFacebook, 
   IconArrowUpRight, 
@@ -13,37 +14,13 @@ import {
 
 interface SidebarProps {
   cities: City[];
+  posts?: PostSummary[];
 }
 
-export default function Sidebar({ cities }: SidebarProps) {
-  // 5 highly realistic topics from the actual portal
-  const popularPosts = [
-    {
-      id: 'p1',
-      title: 'Friagem histórica no Acre pode atingir Rio Branco com 11°C',
-      slug: 'frente-fria-chega-ao-acre-e-derruba-temperaturas-para-15c' // Points to polar front post
-    },
-    {
-      id: 'p2',
-      title: 'Entenda o motivo de Julho ser o mês mais seco no Acre',
-      slug: 'julho-o-mes-mais-frio-e-seco-no-acre'
-    },
-    {
-      id: 'p3',
-      title: 'Recorde de calor em Tarauacá: termômetros chegam a 37°C',
-      slug: 'tarauaca-lidera-temperaturas-maximas-na-regiao'
-    },
-    {
-      id: 'p4',
-      title: 'Massa de ar seco afasta chuvas de Tarauacá',
-      slug: 'massa-de-ar-seco-afasta-chuvas-de-tarauaca'
-    },
-    {
-      id: 'p5',
-      title: 'O que é o fenômeno da friagem que ocorre na Amazônia?',
-      slug: 'o-que-e-o-fenomeno-da-friagem-que-ocorre-no-acre'
-    }
-  ];
+export default function Sidebar({ cities, posts: providedPosts }: SidebarProps) {
+  // Use provided posts or fallback to all post summaries, picking top 5 valid posts
+  const allPosts = providedPosts || getPostSummaries();
+  const popularPosts = allPosts.slice(0, 5);
 
   return (
     <aside className="w-full lg:w-[320px] flex flex-col gap-6">
@@ -89,7 +66,7 @@ export default function Sidebar({ cities }: SidebarProps) {
                 <span className="text-sm font-black text-slate-300 group-hover:text-sky-400 transition-colors">
                   {String(idx + 1).padStart(2, '0')}
                 </span>
-                <span>{post.title}</span>
+                <span>{post.titulo}</span>
               </Link>
             </li>
           ))}

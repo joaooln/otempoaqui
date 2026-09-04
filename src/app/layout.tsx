@@ -15,11 +15,11 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "O Tempo Aqui",
-  description: "Redesign Protótipo Paralelo",
+  title: "O Tempo Aqui | Previsão do tempo para o Acre",
+  description: "Portal de previsão do tempo, boletins diários e análises meteorológicas do Acre mantido pelo meteorologista Davi Friale.",
   robots: {
-    index: false,
-    follow: false,
+    index: true,
+    follow: true,
   },
 };
 

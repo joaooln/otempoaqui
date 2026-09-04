@@ -87,3 +87,11 @@ export function getWeatherCondition(post?: Post | PostSummary): WeatherCondition
     borderClass: 'border-orange-100'
   };
 }
+
+export function getSkyClass(condition: WeatherCondition): string {
+  if (condition.label === 'Friagem / Frio') return 'sky-friagem';
+  if (condition.label === 'Pancadas de Chuva') return 'sky-chuvoso';
+  if (condition.label === 'Calor Intenso') return 'sky-calor';
+  if (condition.label === 'Parcialmente Nublado') return 'sky-nublado';
+  return 'sky-ensolarado';
+}

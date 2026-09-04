@@ -10,7 +10,7 @@ import PostFeed from './PostFeed';
 import Sidebar from './Sidebar';
 import Header from './Header';
 import WeatherAlertBanner from './WeatherAlertBanner';
-import { getWeatherCondition } from '../utils/weatherIcons';
+import { getWeatherCondition, getSkyClass } from '../utils/weatherIcons';
 
 interface HomeDashboardProps {
   initialPosts: PostSummary[];
@@ -66,11 +66,7 @@ export default function HomeDashboard({ initialPosts, initialCities }: HomeDashb
   // Determine dynamic sky background gradient based on active forecast
   const skyClass = useMemo(() => {
     const condition = getWeatherCondition(latestForecast);
-    if (condition.label === 'Friagem / Frio') return 'sky-friagem';
-    if (condition.label === 'Pancadas de Chuva') return 'sky-chuvoso';
-    if (condition.label === 'Calor Intenso') return 'sky-calor';
-    if (condition.label === 'Parcialmente Nublado') return 'sky-nublado';
-    return 'sky-ensolarado';
+    return getSkyClass(condition);
   }, [latestForecast]);
 
   return (

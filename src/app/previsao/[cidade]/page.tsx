@@ -11,7 +11,8 @@ import {
 } from '../../../utils/db';
 import Header from '../../../components/Header';
 import CitySelector from '../../../components/CitySelector';
-import { getWeatherCondition } from '../../../utils/weatherIcons';
+import WeatherAlertBanner from '../../../components/WeatherAlertBanner';
+import { getWeatherCondition, getSkyClass } from '../../../utils/weatherIcons';
 import HeroForecast from '../../../components/HeroForecast';
 import MetricsGrid from '../../../components/MetricsGrid';
 import TempChart from '../../../components/TempChart';
@@ -21,6 +22,14 @@ import { IconArrowLeft, IconMapPin } from '@tabler/icons-react';
 
 interface PageProps {
   params: Promise<{ cidade: string }> | { cidade: string };
+}
+
+// Pre-generate static paths for all cities in SSG
+export async function generateStaticParams() {
+  const cities = getCities();
+  return cities.map(city => ({
+    cidade: city.slug
+  }));
 }
 
 // Generate dynamic metadata for SEO based on the selected city
@@ -63,14 +72,55 @@ export default async function CityPage({ params }: PageProps) {
 
   // Compute dynamic sky background color for this city
   const condition = getWeatherCondition(latestForecast);
-  let skyClass = 'sky-ensolarado';
-  if (condition.label === 'Friagem / Frio') skyClass = 'sky-friagem';
-  else if (condition.label === 'Pancadas de Chuva') skyClass = 'sky-chuvoso';
-  else if (condition.label === 'Calor Intenso') skyClass = 'sky-calor';
-  else if (condition.label === 'Parcialmente Nublado') skyClass = 'sky-nublado';
+  const skyClass = getSkyClass(condition);
+
+  // Schema.org structured data for city page SEO
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'Place',
+    name: `Previsão do tempo em ${city.nome}, Acre`,
+    address: {
+      '@type': 'PostalAddress',
+      addressLocality: city.nome,
+      addressRegion: 'AC',
+      addressCountry: 'BR'
+    },
+    geo: {
+      '@type': 'GeoCoordinates',
+      latitude: city.latitude,
+      longitude: city.longitude
+    }
+  };
+
+  const breadcrumbJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      {
+        '@type': 'ListItem',
+        position: 1,
+        name: 'Início',
+        item: 'https://otempoaqui.vercel.app'
+      },
+      {
+        '@type': 'ListItem',
+        position: 2,
+        name: city.nome,
+        item: `https://otempoaqui.vercel.app/previsao/${city.slug}`
+      }
+    ]
+  };
 
   return (
     <div className={`flex flex-col min-h-screen transition-all duration-1000 ${skyClass}`}>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+      />
       {/* Navigation Header */}
       <Header />
 
@@ -86,6 +136,9 @@ export default async function CityPage({ params }: PageProps) {
         {/* Left Side Column: Weather Dashboard + Feed */}
         <div className="flex-1 space-y-6">
           
+          {/* Automated Weather Warning Banner */}
+          <WeatherAlertBanner post={latestForecast} cityName={city.nome} />
+
           {/* Page Heading */}
           <div className="glass-card rounded-2xl p-6">
             <h1 className="text-xl md:text-2xl font-black text-slate-900 font-display">

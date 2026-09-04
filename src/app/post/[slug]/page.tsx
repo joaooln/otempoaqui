@@ -6,7 +6,7 @@ import { getPostBySlug, getCities, posts } from '../../../utils/db';
 import Header from '../../../components/Header';
 import Sidebar from '../../../components/Sidebar';
 import ShareButton from '../../../components/ShareButton';
-import { getWeatherCondition } from '../../../utils/weatherIcons';
+import { getWeatherCondition, getSkyClass } from '../../../utils/weatherIcons';
 import { 
   IconArrowLeft, 
   IconCalendar, 
@@ -22,6 +22,13 @@ import {
 
 interface PageProps {
   params: Promise<{ slug: string }> | { slug: string };
+}
+
+// Pre-generate static paths for all 300 posts in SSG
+export async function generateStaticParams() {
+  return posts.map(p => ({
+    slug: p.slug
+  }));
 }
 
 // Generate dynamic metadata for SEO
@@ -82,11 +89,7 @@ export default async function PostPage({ params }: PageProps) {
   };
 
   // Compute skyClass dynamically based on this post's weather condition
-  let skyClass = 'sky-ensolarado';
-  if (condition.label === 'Friagem / Frio') skyClass = 'sky-friagem';
-  else if (condition.label === 'Pancadas de Chuva') skyClass = 'sky-chuvoso';
-  else if (condition.label === 'Calor Intenso') skyClass = 'sky-calor';
-  else if (condition.label === 'Parcialmente Nublado') skyClass = 'sky-nublado';
+  const skyClass = getSkyClass(condition);
 
   // JSON-LD structured data for SEO Google News
   const jsonLd = {
